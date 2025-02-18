@@ -7,13 +7,30 @@ public abstract class Enemy : Entity
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float targetDistanceThreshold;
+    [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] protected int attackDamage = 1;
+    private float lastAttackTime = 0;
 
     protected Vector3 targetPos;
+    protected Transform player { get;  private set; }
 
     #region UnityFunctions
 
+    protected override void Start()
+    {
+        base.Start();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null)
+        {
+            Debug.LogWarning("No Player Exists in scene, Asign at least one object the 'Player' tag");
+        }
+        else
+            player = playerObj.transform;
+    }
+
     protected virtual void Update()
     {
+
         if(Vector3.Distance(targetPos, transform.position) > targetDistanceThreshold)
         {
             GoToTarget();
@@ -21,7 +38,22 @@ public abstract class Enemy : Entity
     }
     #endregion
 
-    public abstract void Attack();
+    public virtual void Attack()
+    {
+        //able to attack
+        if (CanAttack())
+        {
+            //tried to attack
+            Debug.Log("Damn");
+            lastAttackTime = Time.time;
+        }
+    }
+
+    protected bool CanAttack()
+    {
+        return (Time.time >= lastAttackTime + attackCooldown);
+    }
+
 
 
     private void GoToTarget()

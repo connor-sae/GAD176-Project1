@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//[RequireComponent(typeof(Collider))]
 public class Entity : MonoBehaviour
 {
 
-    [SerializeField] private int maxHealth;
+    [SerializeField] private int maxHealth = 10;
 
     private int health;
 
     /// <summary>
     /// Decreases health by the given amount
+    /// negative values are discarded
     /// </summary>
     /// <param name="amount"></param>
     public void TakeDamage(int amount)
     {
-        health -= Mathf.Min(amount, 0); // damage cannot be posotive
+        health -= Mathf.Max(amount, 0); //  cannot be negative
 
         if (health <= 0)
         {
@@ -25,11 +27,12 @@ public class Entity : MonoBehaviour
 
     /// <summary>
     /// Increases health by the Given amount
+    /// negative values are discarded
     /// </summary>
     /// <param name="amount"></param>
     public void Heal(int amount)
     {
-        health += Mathf.Max(amount, 0); // damage cannot be negative
+        health += Mathf.Max(amount, 0); //  cannot be negative
 
         if (health > maxHealth)
         {
