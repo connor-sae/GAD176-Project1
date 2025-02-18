@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour
     [SerializeField] private int maxHealth;
 
     private int health;
+
     /// <summary>
     /// Decreases health by the given amount
     /// </summary>
@@ -35,6 +36,13 @@ public class Entity : MonoBehaviour
             health = maxHealth;
         }
     }
+
+
+    protected virtual void Start()
+    {
+        health = maxHealth;
+    }
+
 
     protected virtual void Die()
     {
