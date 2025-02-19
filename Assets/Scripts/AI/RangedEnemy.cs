@@ -26,7 +26,11 @@ public class RangedEnemy : Enemy
 
     protected override void Attack()
     {
-        throw new System.NotImplementedException();
+        if(projectilePrefab != null)
+        {
+            GameObject projectile = Instantiate(projectilePrefab, attackPoint.position, attackPoint.rotation);
+            if(projectile.TryGetComponent(out ))
+        }
     }
 
     protected override Vector3 Navagate()
