@@ -28,8 +28,12 @@ public class RangedEnemy : Enemy
     {
         if(projectilePrefab != null)
         {
-            GameObject projectile = Instantiate(projectilePrefab, attackPoint.position, attackPoint.rotation);
-            if(projectile.TryGetComponent(out ))
+            GameObject projectileObj = Instantiate(projectilePrefab, attackPoint.position, attackPoint.rotation);
+            if(projectileObj.TryGetComponent(out Projectile projectile))
+            {
+                projectile.OverrideDamage(attackDamage);
+            }
+
         }
     }
 
