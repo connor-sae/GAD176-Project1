@@ -43,6 +43,11 @@ public class Projectile : MonoBehaviour
             if(collision.collider.gameObject == ignoreObject)
             return;
         }
+
+        if(collision.collider.TryGetComponent(out Entity entity))
+            entity.TakeDamage(damage);
+
+        Destroy(gameObject);
     }
 
 }
