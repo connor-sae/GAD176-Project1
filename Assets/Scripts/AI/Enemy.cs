@@ -9,9 +9,11 @@ public abstract class Enemy : Entity
     [SerializeField] private float targetDistanceThreshold;
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] protected int attackDamage = 1;
+    [SerializeField] protected Transform attackPoint;
+
     private float lastAttackTime = 0;
 
-    protected Vector3 targetPos;
+    private Vector3 targetPos;
     protected Transform player { get;  private set; }
 
     #region UnityFunctions
@@ -19,6 +21,7 @@ public abstract class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null)
         {
@@ -30,6 +33,7 @@ public abstract class Enemy : Entity
 
     protected virtual void Update()
     {
+        targetPos = Navagate();
 
         if(Vector3.Distance(targetPos, transform.position) > targetDistanceThreshold)
         {
@@ -38,22 +42,31 @@ public abstract class Enemy : Entity
     }
     #endregion
 
-    public virtual void Attack()
+    /// <summary>
+    /// Calls attack function if attack cooldown is complete
+    /// </summary>
+    public void TryAttack()
     {
-        //able to attack
-        if (CanAttack())
-        {
-            //tried to attack
-            Debug.Log("Damn");
-            lastAttackTime = Time.time;
-        }
+        // enough time has not passed
+        if (Time.time < lastAttackTime + attackCooldown)
+            return;
+        
+        //tried to attack
+        lastAttackTime = Time.time;
+        
     }
 
-    protected bool CanAttack()
-    {
-        return (Time.time >= lastAttackTime + attackCooldown);
-    }
+    /// <summary>
+    /// Performs Enemy Attack
+    /// should not be performed directly, call TryAttack() first to consider attack cooldown
+    /// </summary>
+    protected abstract void Attack();
 
+    /// <summary>
+    /// called every frame
+    /// </summary>
+    /// <returns> the target position to navigate towards</returns>
+    protected abstract Vector3 Navagate();
 
 
     private void GoToTarget()

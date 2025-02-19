@@ -8,49 +8,41 @@ public class MeleeEnemy : Enemy
     private float attackDistanceThreashhold = 0.25f;
     [SerializeField] private float attackRadius = 0.8f;
 
-    protected override void Update()
-    {
 
-        base.Update();
+    protected override Vector3 Navagate()
+    {
         if (player != null)
         {
-
-            targetPos = player.position;
-
             if (Vector3.Distance(transform.position, player.position) <= attackDistanceThreashhold)
-                Attack();
-        }
+                TryAttack();
+            
+            return player.position;
+        }else
+            return Vector3.zero;
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
-        if(CanAttack())
+        
+        Collider[] hits = Physics.OverlapSphere(attackPoint.position, attackRadius);
+
+        foreach(Collider hit in hits)
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, attackRadius);
-
-            foreach(Collider hit in hits)
+            Debug.Log(hit.name);
+            if (hit.TryGetComponent(out Entity entity))
             {
-                Debug.Log(hit.name);
-                if (hit.TryGetComponent(out Entity entity))
+                if (hit.gameObject != this.gameObject)
                 {
-                    Debug.Log("is entity");
-                    if (hit.gameObject != this.gameObject)
-                    {
-
-                        Debug.Log(hit.name);
-                        entity.TakeDamage(attackDamage);
-                    }
+                    Debug.Log(hit.name);
+                    entity.TakeDamage(attackDamage);
                 }
             }
         }
-
-
-        base.Attack();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 }
