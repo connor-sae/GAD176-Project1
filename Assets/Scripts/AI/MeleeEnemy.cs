@@ -40,9 +40,5 @@ public class MeleeEnemy : Enemy
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-    }
+    
 }

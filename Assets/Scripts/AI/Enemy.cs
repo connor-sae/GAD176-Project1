@@ -39,6 +39,8 @@ public abstract class Enemy : Entity
         {
             GoToTarget();
         }
+        if(player != null)
+            RotateTowards(player.position);
     }
     #endregion
 
@@ -74,6 +76,20 @@ public abstract class Enemy : Entity
         Vector3 targetDir = targetPos - transform.position;
         targetDir.Normalize();
         transform.position += targetDir * moveSpeed * Time.deltaTime;
+    }
+
+    private void RotateTowards(Vector3 target)
+    {
+        Vector3 dir = target - transform.position;
+        float rot = Mathf.Atan2(dir.y, dir.x);
+        Debug.Log(rot * Mathf.Rad2Deg);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.AngleAxis(rot * Mathf.Rad2Deg, Vector3.up), rotateSpeed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, 1f);
     }
 
 }
