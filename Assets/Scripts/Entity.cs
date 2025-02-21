@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
 
     [SerializeField] private int maxHealth = 10;
 
-    private int health;
+    [SerializeField] private int health;
 
     /// <summary>
     /// Decreases health by the given amount

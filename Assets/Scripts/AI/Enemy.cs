@@ -52,8 +52,9 @@ public abstract class Enemy : Entity
         // enough time has not passed
         if (Time.time < lastAttackTime + attackCooldown)
             return;
-        
-        //tried to attack
+
+
+        Attack();
         lastAttackTime = Time.time;
         
     }
@@ -81,8 +82,8 @@ public abstract class Enemy : Entity
     private void RotateTowards(Vector3 target)
     {
         Vector3 dir = target - transform.position;
-        float rot = Mathf.Atan2(dir.y, dir.x);
-        Debug.Log(rot * Mathf.Rad2Deg);
+        float rot = Mathf.Atan2(dir.x, dir.z);
+        //Debug.Log(rot * Mathf.Rad2Deg);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.AngleAxis(rot * Mathf.Rad2Deg, Vector3.up), rotateSpeed * Time.deltaTime);
     }
 

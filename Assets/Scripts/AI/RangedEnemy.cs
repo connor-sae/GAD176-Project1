@@ -32,6 +32,7 @@ public class RangedEnemy : Enemy
             if(projectileObj.TryGetComponent(out Projectile projectile))
             {
                 projectile.OverrideDamage(attackDamage);
+                projectile.IgnoreObject(gameObject);
             }
 
         }
@@ -39,6 +40,9 @@ public class RangedEnemy : Enemy
 
     protected override Vector3 Navagate()
     {
+        if(player == null)
+            return transform.position;
+
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if(playerDistance < minimumPlayerDistance || playerDistance > maximumlayerDistance)
         {
@@ -52,7 +56,7 @@ public class RangedEnemy : Enemy
         {
             TryAttack();
             
-            return Vector3.zero;
+            return transform.position;
         }
     }
 }

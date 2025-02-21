@@ -18,7 +18,7 @@ public class MeleeEnemy : Enemy
             
             return player.position;
         }else
-            return Vector3.zero;
+            return transform.position;
     }
 
     protected override void Attack()
@@ -28,7 +28,6 @@ public class MeleeEnemy : Enemy
 
         foreach(Collider hit in hits)
         {
-            Debug.Log(hit.name);
             if (hit.TryGetComponent(out Entity entity))
             {
                 if (hit.gameObject != this.gameObject)

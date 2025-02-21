@@ -14,20 +14,23 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// ignore's all objects in list, less performant than ignoreLayers
     /// </summary>
-    [SerializeField] GameObject[] ignoreObjects;
+    [SerializeField] List<GameObject> ignoreObjects;
     [SerializeField] float speed;
     [SerializeField] private int damage;
+    private Rigidbody rb;
 
     #region UnityFunctions
 
     void Awake()
     {
         GetComponent<Collider>().excludeLayers = ignoreLayers;
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
     }
 
     void Update()
     {
-        transform.position += Vector3.forward * speed * Time.deltaTime;
+        rb.velocity = transform.forward * speed;
     }
 
     #endregion
@@ -36,6 +39,12 @@ public class Projectile : MonoBehaviour
     {
         damage = value;
     }
+
+    public void IgnoreObject(GameObject objectToIgnore)
+    {
+        ignoreObjects.Add(objectToIgnore);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         foreach(GameObject ignoreObject in ignoreObjects)
