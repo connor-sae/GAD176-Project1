@@ -22,9 +22,19 @@ public class RangedEnemy : Enemy
         optimalPlayerDistance = Mathf.Clamp(optimalPlayerDistance, minimumPlayerDistance, maximumlayerDistance);
     }
 
+    
+
     #endregion
 
-    protected override void Attack()
+    protected override bool CanAttack()
+    {
+        if(player == null)
+            return false;
+        
+        return base.CanAttack() & atOptimalDistance;
+    }
+
+    protected override void OnAttack()
     {
         if(projectilePrefab != null)
         {
@@ -38,24 +48,31 @@ public class RangedEnemy : Enemy
         }
     }
 
+    private bool atOptimalDistance;
     protected override Vector3 Navagate()
     {
         if(player == null)
             return transform.position;
 
-        float playerDistance = Vector3.Distance(transform.position, player.position);
+        Vector3 dir = transform.position - player.position;
+        //ignore vertical difference
+        dir = new Vector3(dir.x, 0, dir.z);
+        //consider planer distance from player
+
+        float playerDistance = dir.magnitude;
         if(playerDistance < minimumPlayerDistance || playerDistance > maximumlayerDistance)
         {
+            atOptimalDistance = false;
             //flee to a fixed position directly away from the player
             Vector3 fleeDirection = transform.position - player.position;
+            fleeDirection = new Vector3(fleeDirection.x, transform.position.y, fleeDirection.z);
             fleeDirection.Normalize();
             Vector3 fleePosition = player.position + fleeDirection * optimalPlayerDistance;
 
             return fleePosition;
         }else
-        {
-            TryAttack();
-            
+        {            
+            atOptimalDistance = true;
             return transform.position;
         }
     }

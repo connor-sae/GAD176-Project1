@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof (Rigidbody))]
+[RequireComponent(typeof (Collider))]
 public abstract class Enemy : Entity
 {
     [SerializeField] private float moveSpeed;
@@ -15,6 +17,7 @@ public abstract class Enemy : Entity
 
     private Vector3 targetPos;
     protected Transform player { get;  private set; }
+    protected Rigidbody m_rigidBody;
 
     #region UnityFunctions
 
@@ -22,6 +25,9 @@ public abstract class Enemy : Entity
     {
         base.Start();
 
+        m_rigidBody = GetComponent<Rigidbody>();
+        m_rigidBody.useGravity = true;
+        m_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null)
         {
@@ -31,7 +37,7 @@ public abstract class Enemy : Entity
             player = playerObj.transform;
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         targetPos = Navagate();
 
@@ -41,20 +47,27 @@ public abstract class Enemy : Entity
         }
         if(player != null)
             RotateTowards(player.position);
+
+        TryAttack();
     }
     #endregion
 
+    protected virtual bool CanAttack()
+    {
+        return Time.time >= lastAttackTime + attackCooldown;
+    }
+
     /// <summary>
-    /// Calls attack function if attack cooldown is complete
+    /// Calls OnAttack function if This enemy Can Attack is complete
     /// </summary>
     public void TryAttack()
     {
         // enough time has not passed
-        if (Time.time < lastAttackTime + attackCooldown)
+        if (!CanAttack())
             return;
 
 
-        Attack();
+        OnAttack();
         lastAttackTime = Time.time;
         
     }
@@ -63,7 +76,7 @@ public abstract class Enemy : Entity
     /// Performs Enemy Attack
     /// should not be performed directly, call TryAttack() first to consider attack cooldown
     /// </summary>
-    protected abstract void Attack();
+    protected abstract void OnAttack();
 
     /// <summary>
     /// called every frame

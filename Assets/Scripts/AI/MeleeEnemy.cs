@@ -8,20 +8,28 @@ public class MeleeEnemy : Enemy
     private float attackDistanceThreashhold = 0.25f;
     [SerializeField] private float attackRadius = 0.8f;
 
-
+    
     protected override Vector3 Navagate()
     {
         if (player != null)
         {
-            if (Vector3.Distance(transform.position, player.position) <= attackDistanceThreashhold)
-                TryAttack();
-            
             return player.position;
         }else
             return transform.position;
     }
 
-    protected override void Attack()
+    protected override bool CanAttack()
+    {
+        if(player == null)
+            return false;
+        Vector3 dir = transform.position - player.position;
+        //ignore vertical difference
+        dir = new Vector3(dir.x, 0, dir.z);
+        //consider planer distance from player
+        return base.CanAttack() & (dir.magnitude <= attackDistanceThreashhold);
+    }
+
+    protected override void OnAttack()
     {
         
         Collider[] hits = Physics.OverlapSphere(attackPoint.position, attackRadius);

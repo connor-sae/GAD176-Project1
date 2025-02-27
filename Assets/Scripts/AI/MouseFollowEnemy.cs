@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MouseFollowEnemy : Enemy
 {
-    protected override void Attack()
+    protected override void OnAttack()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     protected override Vector3 Navagate()

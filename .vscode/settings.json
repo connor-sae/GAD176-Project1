@@ -2,14 +2,11 @@
     "files.exclude": {
         "**/.DS_Store": true,
         "**/.git": true,
-<<<<<<< HEAD
-        "**/.gitmodules": true,
-=======
-        "**/.vs": true,
+        "<<<<<<<HEAD**/.gitmodules": true,
+        "=======**/.vs": true,
         "**/.gitmodules": true,
         "**/.vsconfig": true,
->>>>>>> feature/weapon
-        "**/*.booproj": true,
+        ">>>>>>>feature/weapon**/*.booproj": true,
         "**/*.pidb": true,
         "**/*.suo": true,
         "**/*.user": true,
@@ -53,16 +50,13 @@
         "library/": true,
         "obj/": true,
         "Obj/": true,
-<<<<<<< HEAD
-        "ProjectSettings/": true,
-=======
-        "Logs/": true,
+        "<<<<<<<HEADProjectSettings/": true,
+        "=======Logs/": true,
         "logs/": true,
         "ProjectSettings/": true,
         "UserSettings/": true,
->>>>>>> feature/weapon
-        "temp/": true,
+        ">>>>>>>feature/weapontemp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Project 1.sln"
+    "dotnet.defaultSolution": "GAD176-Project1.sln"
 }
