@@ -16,7 +16,7 @@ public abstract class Enemy : Entity
     private float lastAttackTime = 0;
 
     private Vector3 targetPos;
-    protected Transform player { get;  private set; }
+    protected Transform playerPoint { get;  private set; }
     protected Rigidbody m_rigidBody;
 
     #region UnityFunctions
@@ -74,12 +74,12 @@ public abstract class Enemy : Entity
 
     /// <summary>
     /// Performs Enemy Attack
-    /// should not be performed directly, call TryAttack() first to consider attack cooldown
+    /// should not be performed directly, call TryAttack() first to consider attack conditions
     /// </summary>
     protected abstract void OnAttack();
 
     /// <summary>
-    /// called every frame
+    /// called every frame, handles navigation
     /// </summary>
     /// <returns> the target position to navigate towards</returns>
     protected abstract Vector3 Navagate();
