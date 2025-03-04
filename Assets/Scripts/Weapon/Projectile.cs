@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     /// </summary>
     [SerializeField] GameObject[] ignoreObjects;
     [SerializeField] float speed;
-    [SerializeField] private int damage;
+    [SerializeField] private int defaultDamage;
 
     #region UnityFunctions
 
@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
 
     public void OverrideDamage(int value)
     {
-        damage = value;
+        defaultDamage = value;
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
         }
 
         if(collision.collider.TryGetComponent(out Entity entity))
-            entity.TakeDamage(damage);
+            entity.TakeDamage(defaultDamage);
 
         Destroy(gameObject);
     }
