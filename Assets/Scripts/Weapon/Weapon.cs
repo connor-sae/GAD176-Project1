@@ -4,20 +4,21 @@ using System.Drawing;
 using UnityEngine;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
-public class ProjectileWeapon : ScriptableObject
+[CreateAssetMenu(menuName ="Weapon/ProjectileWeapon", fileName = "new Projectile Weapon")]
+public class Weapon : ScriptableObject
 {
 
 
     [Header("Display Info")]
-    [SerializeField] private new string name;
-    [SerializeField] private DisplayObject displayPrefab;
+    public new string name;
+    public DisplayObject displayPrefab;
 
     [Header("Basic")]
     [Tooltip("set to negative to use bullet default damage")]
     [SerializeField] protected int damage;
-    [SerializeField] private float shotDelay;
     [SerializeField] private float spreadAngleSize;
     [SerializeField] private Vector2 recoil;
+    public float shotDelay;
     public ShootMode shootMode;
 
     [Header("Burst Control")]
@@ -36,7 +37,15 @@ public class ProjectileWeapon : ScriptableObject
         currentReserveAmmo = maxAmmo - currentMagazineAmmo;
     }
 
-    public void Shoot(Vector3 shotOrigin, Quaternion shotAngle)
+    /// <summary>
+    /// Coroutine to shoot the next burst / shot using projectiles
+    /// </summary>
+    /// <param name="shotOrigin"></param>
+    /// where the projectile will originate
+    /// <param name="shotAngle"></param>
+    /// the angle the projectile will be shot at
+    /// <returns></returns>
+    public IEnumerator Shoot(Vector3 shotOrigin, Quaternion shotAngle)
     {
         for(int i = 0; i < burstSize; i++)
         {
@@ -49,10 +58,21 @@ public class ProjectileWeapon : ScriptableObject
             Quaternion newAngle = Quaternion.Euler(newDirection);
 
             ShootSingle(shotOrigin, newAngle);
+
+            yield return new WaitForSeconds(burstDelay);
         }
         //reduce ammo?
         //recoil?
     }
+
+    public void Reload()
+    {
+        int reloadAmount = Mathf.Min(magazineSize - currentMagazineAmmo, currentReserveAmmo);
+        currentMagazineAmmo += reloadAmount;
+        currentReserveAmmo -= reloadAmount;
+    }
+
+
 
     protected virtual void ShootSingle(Vector3 shotOrigin, Quaternion shotAngle)
     {

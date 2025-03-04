@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaycastWeapon : ProjectileWeapon
+[CreateAssetMenu(menuName = "Weapon/RaycastWeapon", fileName = "new Raycast Weapon")]
+public class RaycastWeapon : Weapon
 {
     [Header("Raycast Settings")]
     /// <summary>
@@ -11,6 +12,15 @@ public class RaycastWeapon : ProjectileWeapon
     [SerializeField] private bool useCameraOrigin;
     [SerializeField] private float shotRange;
 
+
+    /// <summary>
+    /// Coroutine to shoot the next burst / shot using Raycasts
+    /// </summary>
+    /// <param name="shotOrigin"></param>
+    /// where the ray will originate
+    /// <param name="shotAngle"></param>
+    /// the angle the ray will be cast in
+    /// <returns></returns>
     protected override void ShootSingle(Vector3 shotOrigin, Quaternion shotAngle)
     {
         Ray shotRay;

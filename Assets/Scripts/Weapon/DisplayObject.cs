@@ -18,8 +18,4 @@ public class DisplayObject : MonoBehaviour
         animator = GetComponent<AnimatorController>();
     }
 
-    void Update()
-    {
-        
-    }
 }
