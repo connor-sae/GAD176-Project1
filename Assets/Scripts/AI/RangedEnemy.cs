@@ -28,7 +28,7 @@ public class RangedEnemy : Enemy
 
     protected override bool CanAttack()
     {
-        if(player == null)
+        if(playerPoint == null)
             return false;
         
         return base.CanAttack() & atOptimalDistance;
@@ -51,10 +51,10 @@ public class RangedEnemy : Enemy
     private bool atOptimalDistance;
     protected override Vector3 Navagate()
     {
-        if(player == null)
+        if(playerPoint == null)
             return transform.position;
 
-        Vector3 dir = transform.position - player.position;
+        Vector3 dir = transform.position - playerPoint.position;
         //ignore vertical difference
         dir = new Vector3(dir.x, 0, dir.z);
         //consider planer distance from player
@@ -64,10 +64,10 @@ public class RangedEnemy : Enemy
         {
             atOptimalDistance = false;
             //flee to a fixed position directly away from the player
-            Vector3 fleeDirection = transform.position - player.position;
+            Vector3 fleeDirection = transform.position - playerPoint.position;
             fleeDirection = new Vector3(fleeDirection.x, transform.position.y, fleeDirection.z);
             fleeDirection.Normalize();
-            Vector3 fleePosition = player.position + fleeDirection * optimalPlayerDistance;
+            Vector3 fleePosition = playerPoint.position + fleeDirection * optimalPlayerDistance;
 
             return fleePosition;
         }else

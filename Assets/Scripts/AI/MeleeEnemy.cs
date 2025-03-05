@@ -11,18 +11,18 @@ public class MeleeEnemy : Enemy
     
     protected override Vector3 Navagate()
     {
-        if (player != null)
+        if (playerPoint != null)
         {
-            return player.position;
+            return playerPoint.position;
         }else
             return transform.position;
     }
 
     protected override bool CanAttack()
     {
-        if(player == null)
+        if(playerPoint == null)
             return false;
-        Vector3 dir = transform.position - player.position;
+        Vector3 dir = transform.position - playerPoint.position;
         //ignore vertical difference
         dir = new Vector3(dir.x, 0, dir.z);
         //consider planer distance from player

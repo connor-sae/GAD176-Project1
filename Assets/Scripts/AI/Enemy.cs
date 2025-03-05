@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof (Rigidbody))]
@@ -34,7 +35,7 @@ public abstract class Enemy : Entity
             Debug.LogWarning("No Player Exists in scene, Asign at least one object the 'Player' tag");
         }
         else
-            player = playerObj.transform;
+            playerPoint = playerObj.transform;
     }
 
     private void Update()
@@ -45,8 +46,8 @@ public abstract class Enemy : Entity
         {
             GoToTarget();
         }
-        if(player != null)
-            RotateTowards(player.position);
+        if(playerPoint != null)
+            RotateTowards(playerPoint.position);
 
         TryAttack();
     }
