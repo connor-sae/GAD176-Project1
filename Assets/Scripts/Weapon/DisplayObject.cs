@@ -11,11 +11,16 @@ public class DisplayObject : MonoBehaviour
     /// </summary>
     public Transform shotPoint;
 
-    private AnimatorController animator;
+    private Animator animator;
 
     void Start()
     {
-        animator = GetComponent<AnimatorController>();
+        animator = GetComponent<Animator>();
+    }
+
+    public void PlayReloadAnim()
+    {
+        animator.SetTrigger("Reload");
     }
 
 }

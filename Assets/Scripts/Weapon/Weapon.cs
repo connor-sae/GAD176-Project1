@@ -16,7 +16,7 @@ public abstract class Weapon : ScriptableObject
     [Tooltip("set to negative to use bullet default damage")]
     [SerializeField] protected int damage = 1;
     [SerializeField] private float spreadAngleSize = 0;
-    [SerializeField] private Vector2 recoil;
+    //[SerializeField] private Vector2 recoil;   // unused
     public float shotDelay = 0.5f;
     public ShootMode shootMode;
 
@@ -27,13 +27,15 @@ public abstract class Weapon : ScriptableObject
     [Header("Ammunition")]
     [SerializeField] private int magazineSize = 10;
     [SerializeField] private int maxTotalAmmo = 50;
+    [SerializeField] private float reloadTime = 0f;
     [HideInInspector] public int currentMagazineAmmo;
     [HideInInspector] public int currentReserveAmmo;
+
+    [HideInInspector] public bool reloading = false;
 
     void OnEnable()
     {
         RefillAmmo();
-        Reload();
     }
     
     public void RefillAmmo()
@@ -67,16 +69,27 @@ public abstract class Weapon : ScriptableObject
 
             yield return new WaitForSeconds(burstDelay);
         }
-        //reduce ammo?
+        currentMagazineAmmo -= 1;
+
+        UIManager.UpdateAmmo(currentMagazineAmmo);
         //recoil?
     }
 
-    public void Reload()
+    /// <summary>
+    /// Coroutine to shoot the reload
+    /// </summary>
+    public IEnumerator ReloadRoutine()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        ReloadInstant();
+        UIManager.UpdateAmmo(currentMagazineAmmo, currentReserveAmmo);
+    }
+
+    public void ReloadInstant()
     {
         int reloadAmount = Mathf.Min(magazineSize - currentMagazineAmmo, currentReserveAmmo);
         currentMagazineAmmo += reloadAmount;
         currentReserveAmmo -= reloadAmount;
-        UIManager.UpdateAmmo(currentMagazineAmmo, currentReserveAmmo);
     }
 
 

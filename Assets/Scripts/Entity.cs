@@ -5,15 +5,15 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
 
-    [SerializeField] private int maxHealth;
+    [SerializeField] protected int maxHealth;
 
-    private int health;
+    protected int health;
 
     /// <summary>
     /// Decreases health by the given amount
     /// </summary>
     /// <param name="amount"></param>
-    public void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         health -= Mathf.Max(amount, 0); // damage cannot be negative
 
@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
     /// Increases health by the Given amount
     /// </summary>
     /// <param name="amount"></param>
-    public void Heal(int amount)
+    public virtual void Heal(int amount)
     {
         health += Mathf.Max(amount, 0); // damage cannot be negative
 

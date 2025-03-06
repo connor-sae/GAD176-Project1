@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9adac434705094e933ce22fd3b0edc, type: 3}
-  m_Name: Pistolq
+  m_Name: Sniper
   m_EditorClassIdentifier: 
-  name: Pistol1
-  displayPrefab: {fileID: 1967200665349269379, guid: 0326aaebea5ff0f45bb0feb43f97d9cb, type: 3}
-  damage: 1
+  name: Sniper
+  displayPrefab: {fileID: 5900633567715855180, guid: fcdc8d4e3722c9b4cbf897d52e9b781b, type: 3}
+  damage: 99999
   spreadAngleSize: 0
-  recoil: {x: 0, y: 0}
-  shotDelay: 0.5
+  shotDelay: 1.5
   shootMode: 0
   burstSize: 1
   burstDelay: 0
-  magazineSize: 10
-  maxTotalAmmo: 50
-  currentMagazineAmmo: 10
-  currentReserveAmmo: 40
-  projectilePrefab: {fileID: 0}
+  magazineSize: 5
+  maxTotalAmmo: 15
+  reloadTime: 2
+  currentMagazineAmmo: 5
+  currentReserveAmmo: 4
+  reloading: 0
+  projectilePrefab: {fileID: 7061753665876167250, guid: 69f2c2ba24e639d478e612ec6df3767f, type: 3}

@@ -17,6 +17,7 @@ public class Projectile : MonoBehaviour
     public List<GameObject> ignoreObjects;
     [SerializeField] float speed;
     [SerializeField] private int defaultDamage;
+    [SerializeField] private float lifeTime = 1f;
 
     #region UnityFunctions
 
@@ -32,6 +33,10 @@ public class Projectile : MonoBehaviour
 
     #endregion
 
+    private void Start()
+    {
+        Destroy(gameObject, lifeTime);
+    }
     public void OverrideDamage(int value)
     {
         defaultDamage = value;

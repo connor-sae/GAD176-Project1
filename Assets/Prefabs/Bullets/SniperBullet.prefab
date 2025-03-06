@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 6755531566054777403}
   - component: {fileID: 3110857332124555545}
   m_Layer: 6
-  m_Name: PistolBullet
+  m_Name: SniperBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,6 +268,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   ignoreObjects: []
-  speed: 15
+  speed: 40
   defaultDamage: 0
   lifeTime: 1
