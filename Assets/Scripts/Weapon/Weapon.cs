@@ -4,38 +4,44 @@ using System.Drawing;
 using UnityEngine;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
-[CreateAssetMenu(menuName ="Weapon/ProjectileWeapon", fileName = "new Projectile Weapon")]
-public class Weapon : ScriptableObject
+public abstract class Weapon : ScriptableObject
 {
 
 
     [Header("Display Info")]
-    public new string name;
+    public new string name = "new Gun";
     public DisplayObject displayPrefab;
 
     [Header("Basic")]
     [Tooltip("set to negative to use bullet default damage")]
-    [SerializeField] protected int damage;
-    [SerializeField] private float spreadAngleSize;
+    [SerializeField] protected int damage = 1;
+    [SerializeField] private float spreadAngleSize = 0;
     [SerializeField] private Vector2 recoil;
-    public float shotDelay;
+    public float shotDelay = 0.5f;
     public ShootMode shootMode;
 
     [Header("Burst Control")]
-    [SerializeField] private int burstSize;
-    [SerializeField] private float burstDelay;
+    [SerializeField] private int burstSize = 1;
+    [SerializeField] private float burstDelay = 0;
 
     [Header("Ammunition")]
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private int magazineSize;
-    [SerializeField] private int maxAmmo;
-    public int currentMagazineAmmo;
-    public int currentReserveAmmo;
+    [SerializeField] private int magazineSize = 10;
+    [SerializeField] private int maxTotalAmmo = 50;
+    [HideInInspector] public int currentMagazineAmmo;
+    [HideInInspector] public int currentReserveAmmo;
 
+    void OnEnable()
+    {
+        RefillAmmo();
+        Reload();
+    }
+    
     public void RefillAmmo()
     {
-        currentReserveAmmo = maxAmmo - currentMagazineAmmo;
+        currentReserveAmmo = maxTotalAmmo - currentMagazineAmmo;
     }
+
+    
 
     /// <summary>
     /// Coroutine to shoot the next burst / shot using projectiles
@@ -70,17 +76,12 @@ public class Weapon : ScriptableObject
         int reloadAmount = Mathf.Min(magazineSize - currentMagazineAmmo, currentReserveAmmo);
         currentMagazineAmmo += reloadAmount;
         currentReserveAmmo -= reloadAmount;
+        UIManager.UpdateAmmo(currentMagazineAmmo, currentReserveAmmo);
     }
 
 
 
-    protected virtual void ShootSingle(Vector3 shotOrigin, Quaternion shotAngle)
-    {
-        Projectile projectile = Instantiate(projectilePrefab, shotOrigin, shotAngle).GetComponent<Projectile>();
-
-        if (damage >= 0)
-            projectile.OverrideDamage(damage);
-    }
+    protected abstract void ShootSingle(Vector3 shotPoint, Quaternion shotAngle);
 }
 
 public enum ShootMode

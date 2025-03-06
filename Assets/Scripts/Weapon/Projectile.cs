@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// ignore's all objects in list, less performant than ignoreLayers
     /// </summary>
-    [SerializeField] GameObject[] ignoreObjects;
+    public List<GameObject> ignoreObjects;
     [SerializeField] float speed;
     [SerializeField] private int defaultDamage;
 
@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.forward * speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 
     #endregion
@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
 
         if(collision.collider.TryGetComponent(out Entity entity))
             entity.TakeDamage(defaultDamage);
-
+        
         Destroy(gameObject);
     }
 

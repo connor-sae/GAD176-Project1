@@ -35,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 9136525024574423826}
   - {fileID: 7237731811884242534}
+  - {fileID: 4786700916501969890}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3154923965177887359
@@ -343,6 +344,37 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!1 &3673756502954129242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4786700916501969890}
+  m_Layer: 0
+  m_Name: GunHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4786700916501969890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673756502954129242}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.0104243085, z: -0, w: 0.9999457}
+  m_LocalPosition: {x: 0.5362132, y: 1.1680019, z: 0.3795019}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 10374745490425316}
+  m_LocalEulerAnglesHint: {x: 0, y: -1.195, z: 0}
 --- !u!1 &4030126122340874000
 GameObject:
   m_ObjectHideFlags: 0

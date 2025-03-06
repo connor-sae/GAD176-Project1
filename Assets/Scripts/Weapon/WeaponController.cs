@@ -9,60 +9,63 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Transform gunHolder;
 
     [SerializeField] private List<Weapon> weapons;
-    [SerializeField] private DisplayObject currentWeaponDisplay;
-    private int activeWeapon = 0;
+    private DisplayObject currentWeaponDisplay;
+    private int activeWeaponIndex = 0;
     private float lastShotTime;
-
-    [Header("UI")]
-    [SerializeField] private TMP_Text magazineAmmoUI;
-    [SerializeField] private TMP_Text reserveAmmoUI;
-    [SerializeField] private TMP_Text gunNameUI;
 
     private void Start()
     {
         if(weapons[0] != null)
-            UnHolsterWeapon(0);
+            EquipWeapon(0);
     }
 
     private void Update()
     {
-        switch(weapons[activeWeapon].shootMode)
+        if(weapons.Count > 0 && weapons[activeWeaponIndex] != null)
+            switch(weapons[activeWeaponIndex].shootMode)
+            {
+                case ShootMode.SEMIAUTO: if (Input.GetButtonDown("Fire1")) TryShoot();
+                    break;
+                case ShootMode.AUTOMATIC: if (Input.GetButton("Fire1")) TryShoot();
+                    break;
+            }
+
+        //check all possible keypad inputs alpha1 - alpha9 (49 - 57) therefor keypadi => i + 49
+        //equip that weapon if it exists
+        for(int i = 0; i < weapons.Count; i++)
         {
-            case ShootMode.SEMIAUTO: if (Input.GetButtonDown("Fire")) TryShoot();
+            if(i > 9) 
                 break;
-            case ShootMode.AUTOMATIC: if (Input.GetButton("Fire")) TryShoot();
-                break;
+            if(Input.GetKeyDown((KeyCode)(i + 49)) && weapons[i] != null)
+            {
+                EquipWeapon(i);
+            }
         }
     }
 
     private void TryShoot()
     {
-        if (Time.time < lastShotTime + weapons[activeWeapon].shotDelay)
+        if (Time.time < lastShotTime + weapons[activeWeaponIndex].shotDelay)
             return;
 
+        Debug.Log("Made it");
         Transform shotPoint = currentWeaponDisplay.shotPoint;
-        StartCoroutine(weapons[activeWeapon].Shoot(shotPoint.position, shotPoint.rotation));
+        StartCoroutine(weapons[activeWeaponIndex].Shoot(shotPoint.position, shotPoint.rotation));
 
         lastShotTime = Time.time;
     }
 
-    private void UnHolsterWeapon(int weaponToHolster)
+    //unequip current weapon equip new weapon
+    private void EquipWeapon(int weaponIndexToEquip)
     {
-        Destroy(currentWeaponDisplay); // could play anim
-        currentWeaponDisplay = Instantiate(weapons[weaponToHolster].displayPrefab, gunHolder.position, gunHolder.rotation);
+        Destroy(currentWeaponDisplay); 
+        // could play anim
 
+        activeWeaponIndex = weaponIndexToEquip;
+        currentWeaponDisplay = Instantiate(weapons[activeWeaponIndex].displayPrefab, gunHolder);
 
-        activeWeapon = weaponToHolster;
-        //update UI;
-    }
-
-    private void UpdateUI()
-    {
-        Weapon c_weapon = weapons[activeWeapon];
-
-        magazineAmmoUI.text = c_weapon.currentMagazineAmmo.ToString();
-        reserveAmmoUI.text = c_weapon.currentReserveAmmo.ToString();
-        gunNameUI.text = c_weapon.name.ToString();
+        UIManager.UpdateAmmo(weapons[activeWeaponIndex].currentMagazineAmmo, weapons[weaponIndexToEquip].currentReserveAmmo);
+        UIManager.UpdateGunName(weapons[activeWeaponIndex].name);
     }
 
     //sets 0 to 1 and 1 to 0

@@ -15,7 +15,7 @@ public class Entity : MonoBehaviour
     /// <param name="amount"></param>
     public void TakeDamage(int amount)
     {
-        health -= Mathf.Min(amount, 0); // damage cannot be posotive
+        health -= Mathf.Max(amount, 0); // damage cannot be negative
 
         if (health <= 0)
         {
