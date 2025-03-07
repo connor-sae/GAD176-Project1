@@ -46,13 +46,18 @@ public class Projectile : MonoBehaviour
         foreach(GameObject ignoreObject in ignoreObjects)
         {
             if(collision.collider.gameObject == ignoreObject)
-            return;
+                return;
         }
 
         if(collision.collider.TryGetComponent(out Entity entity))
             entity.TakeDamage(defaultDamage);
         
         Destroy(gameObject);
+    }
+
+    public void IgnoreObject(GameObject objectToIgnore)
+    {
+        ignoreObjects.Add(objectToIgnore);
     }
 
 }
