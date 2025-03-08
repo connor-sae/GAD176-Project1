@@ -100,6 +100,9 @@ public abstract class Weapon : ScriptableObject
 
 
     protected abstract void ShootSingle(Vector3 shotPoint, Quaternion shotAngle);
+
+    
+     
 }
 
 public enum ShootMode
@@ -107,3 +110,4 @@ public enum ShootMode
     SEMIAUTO,
     AUTOMATIC,
 }
+

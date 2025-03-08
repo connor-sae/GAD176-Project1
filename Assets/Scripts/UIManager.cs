@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     /// <param name="reserveAmmo"></param>
     public static void UpdateAmmo(int magazineAmmo, int reserveAmmo = -1)
     {
+        if(I == null)
+            return;
+
         if(magazineAmmo >= 0)
             I.magazineAmmoUI.text = magazineAmmo.ToString();
         
@@ -40,11 +43,17 @@ public class UIManager : MonoBehaviour
 
     public static void UpdateGunName(string gunName)
     {
+        if (I == null)
+            return;
+
         I.gunNameUI.text = gunName;
     }
 
     public static void UpdateHealth(int currentHealth, int maxHealth)
     {
+        if (I == null)
+            return;
+
         I.healthslider.value = (float)currentHealth / maxHealth;
     }
 }

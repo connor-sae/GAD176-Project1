@@ -31,7 +31,7 @@ public class WeaponController : MonoBehaviour
         if (weapons[0] != null)
         {
             EquipWeapon(0);
-            UIManager.UpdateAmmo(weapons[0].currentMagazineAmmo, weapons[1].currentMagazineAmmo);
+            UIManager.UpdateAmmo(activeWeapon.currentMagazineAmmo, activeWeapon.currentReserveAmmo);
         }
         
     }
@@ -100,7 +100,8 @@ public class WeaponController : MonoBehaviour
 
         if (reloadRoutine != null)
             StopCoroutine(reloadRoutine);
-        activeWeapon.reloading = false;
+        if(activeWeapon != null)
+            activeWeapon.reloading = false;
 
         activeWeapon = weapons[weaponIndexToEquip];
         currentWeaponDisplay = Instantiate(activeWeapon.displayPrefab, gunHolder);
@@ -117,6 +118,7 @@ public class WeaponController : MonoBehaviour
         if (!activeWeapon.isFull()) // more conditions can be added as needed ie. specific ammo types
         {
             activeWeapon.RefillAmmo();
+            UIManager.UpdateAmmo(activeWeapon.currentMagazineAmmo, activeWeapon.currentReserveAmmo);
             return true;
         }
 
