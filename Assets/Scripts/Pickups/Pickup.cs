@@ -10,11 +10,11 @@ public abstract class Pickup : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            OnCollected(player);
+            OnPickup(player);
             if(singleUse)
                 Destroy(gameObject);
         }
     }
 
-    protected abstract void OnCollected(Player player);
+    protected abstract void OnPickup(Player player);
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeEnemy : Enemy
 {
 
-    private float attackDistanceThreashhold = 0.25f;
+    [SerializeField] private float attackDistanceThreashhold = 0.5f;
     [SerializeField] private float attackRadius = 0.8f;
 
     
@@ -22,16 +22,14 @@ public class MeleeEnemy : Enemy
     {
         if(playerPoint == null)
             return false;
-        Vector3 dir = transform.position - playerPoint.position;
         //ignore vertical difference
-        dir = new Vector3(dir.x, 0, dir.z);
+        Vector3 dir = new Vector2(attackPoint.position.x, attackPoint.position.z) - new Vector2(playerPoint.position.x, playerPoint.position.z);
         //consider planer distance from player
         return base.CanAttack() & (dir.magnitude <= attackDistanceThreashhold);
     }
 
     protected override void OnAttack()
     {
-        
         Collider[] hits = Physics.OverlapSphere(attackPoint.position, attackRadius);
 
         foreach(Collider hit in hits)

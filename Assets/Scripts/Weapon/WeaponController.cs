@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -64,13 +65,48 @@ public class WeaponController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R) && !activeWeapon.reloading)
         {
-            if (activeWeapon != null)
-            {
-                //reload weapon
-                currentWeaponDisplay.PlayReloadAnim();
-                reloadRoutine = StartCoroutine(activeWeapon.ReloadRoutine());
-            }
+            
+            ReloadActiveWeapon();
         }
+    }
+
+    private void ReloadActiveWeapon()
+    {
+        if (activeWeapon != null)
+        {
+            currentWeaponDisplay.PlayReloadAnim();
+            reloadRoutine = StartCoroutine(activeWeapon.ReloadRoutine());
+        }
+    }
+
+    /// <summary>
+    /// Refills the currently active weapon if it is not full
+    /// </summary>
+    /// <returns>if the weapon was refilled</returns>
+    public bool RefillCurrentWeaponAmmo()
+    {
+        if (!activeWeapon.isFull()) // more conditions can be added as needed ie. specific ammo types
+        {
+
+            activeWeapon.RefillAmmo();
+            UIManager.UpdateAmmo(activeWeapon.currentMagazineAmmo, activeWeapon.currentReserveAmmo);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Adds a weapon to the weapon controller inventory and equips it
+    /// </summary>
+    /// <param name="weaponToCollect"></param>
+    public void CollectWeapon(Weapon weaponToCollect)
+    {
+
+        weapons.Add(Instantiate(weaponToCollect));
+        EquipWeapon(weapons.Count - 1);
+
+        ReloadActiveWeapon();
     }
 
     private void TryShoot()
@@ -109,21 +145,7 @@ public class WeaponController : MonoBehaviour
         UIManager.UpdateGunName(activeWeapon.name);
     }
 
-    /// <summary>
-    /// Refills the currently active weapon if it is not full
-    /// </summary>
-    /// <returns>if the weapon was refilled</returns>
-    public bool RefillCurrentWeaponAmmo()
-    {
-        if (!activeWeapon.isFull()) // more conditions can be added as needed ie. specific ammo types
-        {
-            activeWeapon.RefillAmmo();
-            UIManager.UpdateAmmo(activeWeapon.currentMagazineAmmo, activeWeapon.currentReserveAmmo);
-            return true;
-        }
-
-        return false;
-    }
+    
 
     /// <summary>
     /// Finds the Index of the given weapon in the inventory, returns -1 if the weapon cannot be found

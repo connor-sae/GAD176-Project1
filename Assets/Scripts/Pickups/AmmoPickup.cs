@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AmmoPickup : Pickup
 {
-    protected override void OnCollected(Player player)
+    protected override void OnPickup(Player player)
     {
         player.weaponController.RefillCurrentWeaponAmmo();
     }

@@ -33,11 +33,12 @@ public abstract class Weapon : ScriptableObject
 
     [HideInInspector] public bool reloading = false;
 
-    void OnEnable()
+    private void OnEnable()
     {
+        currentMagazineAmmo = magazineSize;
         RefillAmmo();
     }
-    
+
     public void RefillAmmo()
     {
         currentReserveAmmo = maxTotalAmmo - currentMagazineAmmo;
@@ -100,9 +101,6 @@ public abstract class Weapon : ScriptableObject
 
 
     protected abstract void ShootSingle(Vector3 shotPoint, Quaternion shotAngle);
-
-    
-     
 }
 
 public enum ShootMode

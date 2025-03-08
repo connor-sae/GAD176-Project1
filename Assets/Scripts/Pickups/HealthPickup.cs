@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthPickup : Pickup
 {
     public int healAmount = 5;
-    protected override void OnCollected(Player player)
+    protected override void OnPickup(Player player)
     {
         player.Heal(healAmount);
     }

@@ -53,11 +53,6 @@ public abstract class Enemy : Entity
     }
     #endregion
 
-    protected virtual bool CanAttack()
-    {
-        return Time.time >= lastAttackTime + attackCooldown;
-    }
-
     /// <summary>
     /// Calls OnAttack function if This enemy Can Attack is complete
     /// </summary>
@@ -70,7 +65,7 @@ public abstract class Enemy : Entity
 
         OnAttack();
         lastAttackTime = Time.time;
-        
+
     }
 
     /// <summary>
@@ -84,6 +79,13 @@ public abstract class Enemy : Entity
     /// </summary>
     /// <returns> the target position to navigate towards</returns>
     protected abstract Vector3 Navagate();
+
+    protected virtual bool CanAttack()
+    {
+        return Time.time >= lastAttackTime + attackCooldown;
+    }
+
+
 
 
     private void GoToTarget()

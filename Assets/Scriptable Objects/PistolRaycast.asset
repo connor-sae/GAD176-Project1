@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b966c076bd925d4eb6fc9a3698bb13a, type: 3}
   m_Name: PistolRaycast
   m_EditorClassIdentifier: 
-  name: Pistol
+  name: Ray Pistol
   displayPrefab: {fileID: 1967200665349269379, guid: 0326aaebea5ff0f45bb0feb43f97d9cb, type: 3}
   damage: 100
   spreadAngleSize: 0
-  recoil: {x: 0, y: 0}
   shotDelay: 0.5
   shootMode: 0
   burstSize: 1
   burstDelay: 0
-  projectilePrefab: {fileID: 0}
   magazineSize: 10
-  maxAmmo: 50
-  currentMagazineAmmo: 0
-  currentReserveAmmo: 50
+  maxTotalAmmo: 50
+  reloadTime: 0
+  currentMagazineAmmo: 10
+  currentReserveAmmo: 40
+  reloading: 0
   useCameraOrigin: 1
   shotRange: 100
