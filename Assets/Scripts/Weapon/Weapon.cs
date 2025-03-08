@@ -43,6 +43,11 @@ public abstract class Weapon : ScriptableObject
         currentReserveAmmo = maxTotalAmmo - currentMagazineAmmo;
     }
 
+    public bool isFull()
+    {
+        return currentMagazineAmmo + currentReserveAmmo == maxTotalAmmo;
+    }
+
     
 
     /// <summary>
