@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(WeaponController))]
 public class Player : Entity
 {
-    public WeaponController weaponController;
+    [HideInInspector] public WeaponController weaponController;
     protected override void Start()
     {
         base.Start();

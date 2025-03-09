@@ -29,13 +29,13 @@ public abstract class Enemy : Entity
         m_rigidBody = GetComponent<Rigidbody>();
         m_rigidBody.useGravity = true;
         m_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj == null)
+        Player player = GameObject.FindAnyObjectByType<Player>();
+        if (player == null)
         {
             Debug.LogWarning("No Player Exists in scene, Asign at least one object the 'Player' tag");
         }
         else
-            playerPoint = playerObj.transform;
+            playerPoint = player.transform;
     }
 
     private void Update()

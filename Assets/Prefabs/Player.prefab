@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8944133303941235618}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+  weaponController: {fileID: 0}
 --- !u!114 &8944133303941235618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,11 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunHolder: {fileID: 4786700916501969890}
   weapons:
-  - {fileID: 11400000, guid: 90ca06144aabda04b906305a0db01b05, type: 2}
-  - {fileID: 11400000, guid: af8a386c72ed99241b3c923ce2a4841a, type: 2}
-  - {fileID: 11400000, guid: 4292053cc80d1844289a666b31fadd71, type: 2}
-  - {fileID: 11400000, guid: 20ae9a224139acc4c987a9fef62fc138, type: 2}
-  - {fileID: 11400000, guid: 7666285ce3a6e9040a224ecfe96fdeb4, type: 2}
+  - {fileID: 11400000, guid: 1a0af23f7a110474d9ea1f7f681ce910, type: 2}
 --- !u!1 &1881544732884933734
 GameObject:
   m_ObjectHideFlags: 0
